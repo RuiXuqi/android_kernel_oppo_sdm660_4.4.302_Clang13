@@ -6,6 +6,7 @@
 #define pr_fmt(fmt) "simple_lmk: " fmt
 
 #include <linux/freezer.h>
+#include <linux/sched.h>
 #include <linux/kthread.h>
 #include <linux/mm.h>
 #include <linux/moduleparam.h>
