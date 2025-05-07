@@ -94,7 +94,7 @@ queue_ra_store(struct request_queue *q, const char *page, size_t count)
 
 	return ret;
 }
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPO_FG_OPT)
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 static ssize_t queue_fgio_show(struct request_queue *q, char *page)
 {
@@ -401,7 +401,7 @@ static struct queue_sysfs_entry queue_ra_entry = {
 	.show = queue_ra_show,
 	.store = queue_ra_store,
 };
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPO_FG_OPT)
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 static struct queue_sysfs_entry queue_fgio_entry = {
 	.attr = {.name = "fg_io_cnt_max", .mode = S_IRUGO | S_IWUSR },
@@ -536,7 +536,7 @@ static struct queue_sysfs_entry queue_poll_entry = {
 static struct attribute *default_attrs[] = {
 	&queue_requests_entry.attr,
 	&queue_ra_entry.attr,
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPO_FG_OPT)
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	&queue_fgio_entry.attr,
 	&queue_bothio_entry.attr,
