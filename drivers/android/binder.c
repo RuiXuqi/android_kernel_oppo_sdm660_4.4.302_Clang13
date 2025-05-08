@@ -74,7 +74,7 @@
 #include "binder_alloc.h"
 #include "binder_internal.h"
 #include "binder_trace.h"
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 #include <linux/oppocfs/oppo_cfs_binder.h>
 #endif
@@ -2989,7 +2989,7 @@ static int binder_proc_transaction(struct binder_transaction *t,
 		binder_transaction_priority(thread->task, t, node_prio,
 					    node->inherit_rt);
 		binder_enqueue_thread_work_ilocked(thread, &t->work);
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
         if (sysctl_uifirst_enabled && !oneway) {
             binder_thread_check_and_set_dynamic_ux(thread->task, t->from->task);
@@ -3767,7 +3767,7 @@ static void binder_transaction(struct binder_proc *proc,
 		target_proc->outstanding_txns++;
 		binder_inner_proc_unlock(target_proc);
 		wake_up_interruptible_sync(&target_thread->wait);
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
         if (sysctl_uifirst_enabled) {
             binder_thread_check_and_remove_dynamic_ux(thread->task);
@@ -4815,7 +4815,7 @@ retry:
 			trd->sender_pid =
 				task_tgid_nr_ns(sender,
 						task_active_pid_ns(current));
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
             if (sysctl_uifirst_enabled) {
                 binder_thread_check_and_set_dynamic_ux(thread->task, t_from->task);

@@ -327,7 +327,7 @@ static int max_sched_tunable_scaling = SCHED_TUNABLESCALING_END-1;
 #endif /* CONFIG_SMP */
 #endif /* CONFIG_SCHED_DEBUG */
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 int sysctl_uifirst_enabled = 1;
 int sysctl_launcher_boost_enabled = 0;
@@ -1638,7 +1638,7 @@ static struct ctl_table kern_table[] = {
 		.proc_handler	= proc_dointvec,
 	},
 #endif
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 	{
 		.procname	= "uifirst_enabled",

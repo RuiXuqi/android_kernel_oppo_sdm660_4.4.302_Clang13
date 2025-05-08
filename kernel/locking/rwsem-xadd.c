@@ -87,7 +87,7 @@ void __init_rwsem(struct rw_semaphore *sem, const char *name,
 	sem->owner = NULL;
 	osq_lock_init(&sem->osq);
 #endif
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     sem->ux_dep_task = NULL;
 #endif
@@ -230,7 +230,7 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 	raw_spin_lock_irq(&sem->wait_lock);
 	if (list_empty(&sem->wait_list))
 		adjustment += RWSEM_WAITING_BIAS;
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled) {
         rwsem_list_add(waiter.task, &waiter.list, &sem->wait_list);
@@ -254,7 +254,7 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 	     adjustment != -RWSEM_ACTIVE_READ_BIAS))
 		sem = __rwsem_do_wake(sem, RWSEM_WAKE_ANY);
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled) {
         rwsem_dynamic_ux_enqueue(current, waiter.task, READ_ONCE(sem->owner), sem);
@@ -489,7 +489,7 @@ struct rw_semaphore __sched *rwsem_down_write_failed(struct rw_semaphore *sem)
 	if (list_empty(&sem->wait_list))
 		waiting = false;
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled) {
         rwsem_list_add(waiter.task, &waiter.list, &sem->wait_list);
@@ -515,7 +515,7 @@ struct rw_semaphore __sched *rwsem_down_write_failed(struct rw_semaphore *sem)
 	} else
 		count = rwsem_atomic_update(RWSEM_WAITING_BIAS, sem);
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled) {
         rwsem_dynamic_ux_enqueue(waiter.task, current, READ_ONCE(sem->owner), sem);
@@ -649,7 +649,7 @@ struct rw_semaphore *rwsem_downgrade_wake(struct rw_semaphore *sem)
 	if (!list_empty(&sem->wait_list))
 		sem = __rwsem_do_wake(sem, RWSEM_WAKE_READ_OWNED);
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled) {
         rwsem_dynamic_ux_dequeue(sem, current);

@@ -97,7 +97,7 @@
 
 #include "../../lib/kstrtox.h"
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 #define GLOBAL_SYSTEM_UID KUIDT_INIT(1000)
 #define GLOBAL_SYSTEM_GID KGIDT_INIT(1000)
@@ -970,7 +970,7 @@ static const struct file_operations proc_mem_operations = {
 	.release	= mem_release,
 };
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 static int proc_static_ux_show(struct seq_file *m, void *v)
 {
@@ -2024,7 +2024,7 @@ int pid_getattr(struct vfsmount *mnt, struct dentry *dentry, struct kstat *stat)
 	return 0;
 }
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 bool is_special_entry(struct dentry *dentry, const char* special_proc)
 {
@@ -2081,7 +2081,7 @@ int pid_revalidate(struct dentry *dentry, unsigned int flags)
 			inode->i_uid = GLOBAL_ROOT_UID;
 			inode->i_gid = GLOBAL_ROOT_GID;
 		}
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
         if (is_special_entry(dentry, "static_ux")) {
             inode->i_uid = GLOBAL_SYSTEM_UID;
@@ -3687,7 +3687,7 @@ static const struct pid_entry tid_base_stuff[] = {
 #ifdef CONFIG_CPU_FREQ_TIMES
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     REG("static_ux",  S_IRUGO | S_IWUGO, proc_static_ux_operations),
 #endif

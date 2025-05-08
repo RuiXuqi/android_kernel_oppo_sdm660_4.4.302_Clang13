@@ -89,7 +89,7 @@
 #include <asm/tlbflush.h>
 
 #include <trace/events/sched.h>
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 #include <linux/oppocfs/oppo_cfs_fork.h>
 #endif
@@ -1638,7 +1638,7 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 	p->sequential_io_avg	= 0;
 #endif
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 	init_task_ux_info(p);
 #endif

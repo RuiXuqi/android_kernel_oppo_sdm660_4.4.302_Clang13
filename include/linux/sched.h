@@ -387,7 +387,7 @@ extern char ___assert_task_state[1 - 2*!!(
 
 #endif
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 enum DYNAMIC_UX_TYPE
 {
@@ -2330,7 +2330,7 @@ struct task_struct {
 #endif
 	int pagefault_disabled;
 	
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     int static_ux;
     atomic64_t dynamic_ux;
@@ -2838,7 +2838,7 @@ struct cpu_cycle_counter_cb {
 #define MAX_NUM_CGROUP_COLOC_ID	20
 
 #ifdef CONFIG_SCHED_HMP
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 //jie.cheng@swdp.shanghai, 2015/11/09, export some symbol
 extern int sched_boost(void);
 #endif /* VENDOR_EDIT */
@@ -3429,7 +3429,7 @@ extern bool current_is_single_threaded(void);
 #define for_each_process_thread(p, t)	\
 	for_each_process(p) for_each_thread(p, t)
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 /* Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-26, add smart alloc support,front process first*/
 #ifdef CONFIG_OPPO_FG_OPT
 extern bool is_fg(int uid);

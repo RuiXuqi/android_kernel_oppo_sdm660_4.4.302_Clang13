@@ -44,7 +44,7 @@
 // Add for get cpu load
 #include <soc/oppo/oppo_healthinfo.h>
 #endif /*VENDOR_EDIT*/
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 #include <linux/oppocfs/oppo_cfs_common.h>
 #endif
@@ -6125,7 +6125,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 
 		flags = ENQUEUE_WAKEUP;
 	}
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 		if (sysctl_uifirst_enabled) {
 			enqueue_ux_thread(rq, p);
@@ -6227,7 +6227,7 @@ static void dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 		}
 		flags |= DEQUEUE_SLEEP;
 	}
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 	if (sysctl_uifirst_enabled) {
 		dequeue_ux_thread(rq, p);
@@ -7823,7 +7823,7 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			if (walt_cpu_high_irqload(i))
 				continue;
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/10/15, add for ui first 2.0
             if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled && test_task_ux(p) && !test_ux_task_cpu(i)) {
                 continue;
@@ -8098,7 +8098,7 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 	if (sysctl_sched_sync_hint_enable && sync) {
 		int cpu = smp_processor_id();
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/10/15, add for ui first 2.0
         if (cpumask_test_cpu(cpu, tsk_cpus_allowed(p)) &&
         (!sysctl_uifirst_enabled || !sysctl_launcher_boost_enabled ||
@@ -8190,7 +8190,7 @@ static int select_energy_cpu_brute(struct task_struct *p, int prev_cpu, int sync
 unlock:
 	rcu_read_unlock();
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/09/20, add for ui first 2.0
     if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled &&
         test_task_ux(p) && !test_ux_task_cpu(target_cpu)) {
@@ -8450,7 +8450,7 @@ static void check_preempt_wakeup(struct rq *rq, struct task_struct *p, int wake_
 	find_matching_se(&se, &pse);
 	update_curr(cfs_rq_of(se));
 	BUG_ON(!pse);
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
     if (sysctl_uifirst_enabled && test_task_ux(p) && !test_task_ux(curr)) {
         goto preempt;
@@ -8540,7 +8540,7 @@ again:
 	} while (cfs_rq);
 
 	p = task_of(se);
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 	if (sysctl_uifirst_enabled) {
 		pick_ux_thread(rq, &p, &se);
@@ -9175,7 +9175,7 @@ redo:
 		if (!can_migrate_task(p, env))
 			goto next;
 
-#ifdef VENDOR_EDIT
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/10/15, add for ui first 2.0
         if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled && test_task_ux(p) &&
             test_ux_task_cpu(task_cpu(p)) && !test_ux_task_cpu(env->dst_cpu)) {

@@ -46,9 +46,10 @@ obj-y += irq/
 obj-y += rcu/
 obj-y += livepatch/
 
-
+#if defined (VENDOR_EDIT) && defined (CONFIG_OPPPCFS)
 #Liujie.Xie@TECH.Kernel.Sched, 2019/05/22, add for ui first
 obj-y += oppocfs/
+#endif
 
 obj-$(CONFIG_CHECKPOINT_RESTORE) += kcmp.o
 obj-$(CONFIG_FREEZER) += freezer.o
