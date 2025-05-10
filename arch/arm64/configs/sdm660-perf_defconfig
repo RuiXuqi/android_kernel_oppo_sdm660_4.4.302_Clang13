@@ -818,15 +818,6 @@ CONFIG_ZRAM_LZ4_COMPRESS=y
 CONFIG_CRYPTO_LZ4=y
 # endif
 CONFIG_CRYPTO_LZO=y
-# ifdef VENDOR_EDIT
-# YiXue.Ge@PSW.BSP.Kernel.Driver,2017/07/03, Add for enable PGTABLE_MAPPING
-CONFIG_PGTABLE_MAPPING=y
-# endif
-
-#ifdef VENDOR_EDIT
-#fanhui@PhoneSW.BSP, 2016/04/06, enable DeathHealer in release buld
-#CONFIG_DEATH_HEALER=y
-#endif
 
 #ifdef VENDOR_EDIT
 #yonghui.qin@swdp.shanghai, 2018/11/20, disable module sig feature
